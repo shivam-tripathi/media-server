@@ -64,4 +64,3 @@ class SQS:
             return messages
         except Exception as e:
             logging.error(e)
-
