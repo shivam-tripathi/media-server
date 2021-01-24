@@ -2,7 +2,6 @@ import boto3
 from utils.config import Config
 from functools import reduce
 from botocore.exceptions import ClientError
-from mypy_boto3_output.mypy_boto3_s3_package.mypy_boto3_s3.client import S3Client
 
 
 class S3:
@@ -14,7 +13,7 @@ class S3:
             self.s3 = boto3.client("s3")
             self.init = True
 
-    def client(self) -> S3Client:
+    def client(self):
         return self.s3
 
     def get_upload_url(self, bucket: str, key: str, metadata=None):
