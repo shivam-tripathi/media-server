@@ -10,7 +10,20 @@ def get_key(key, default_value, parse=True):
 class AppConfig:
     def __init__(self):
         self.HOSTNAME = get_key('APP_HOSTNAME', 'http://localhost:8080', False)
-        self.PORT = get_key('PORT', 8080)
+        self.PORT = get_key('APP_PORT', 8080)
+        self.ENV = get_key('APP_ENV', 'dev', False)
+        self.WORKERS = get_key('APP_WORKERS', 3)
+
+
+class AWSConfig:
+    def __init__(self):
+        self.SQS_QUEUES = get_key('AWS_SQS_QUEUES', ['media-queue', 'error-queue'])
+        self.ERROR_QUEUE = get_key('AWS_ERROR_QUEUE', 'error-queue')  # dead-letter queue, used to replay all errors
+
+
+class RedisConfig:
+    def __init__(self):
+        pass
 
 
 class MediaConfig:
@@ -27,8 +40,11 @@ class MediaConfig:
         self.DEFAULT_SIZE = get_key('MEDIA_DEFAULT_SIZE', [400, 400])
         self.SIZES_ALLOWED = get_key('MEDIA_SIZES_ALLOWED',
                                      [[0, 0], [90, 90], [200, 200], [400, 400], [600, 600], [900, 900]])
+        self.SQS_QUEUE = get_key('MEDIA_QUEUE', 'media-queue', False)
 
 
 class Config:
     APP = AppConfig()
     MEDIA = MediaConfig()
+    AWS = AWSConfig()
+    REDIS = RedisConfig()
